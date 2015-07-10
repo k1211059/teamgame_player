@@ -4,11 +4,6 @@
 #
 
 class Player
-  class myAct
-    action = 0
-    betChip = 0
-  end
-  
   def initialize
     @myHand = []
     @opponentHand = []
@@ -19,6 +14,8 @@ class Player
     @myChip = 0
     @myTotal = -1
     @boardBet = 0
+    @myAct.action = 0
+    @myAct.betChip = 0
   end
   
   
