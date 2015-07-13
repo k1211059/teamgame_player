@@ -15,6 +15,7 @@ class Player
     end
     @myTotal = -1
     @opponentTotal = -1
+    @boardTotal = -1
   end
 
   def showStatus
@@ -22,6 +23,7 @@ class Player
     puts "chip : "+@myTotal
     puts "[ player "+@opponentID+" ]"
     puts "chip : "+@opponentTotal
+    puts "[ board chip : "+@boardTotal+" ]"
   end
   
   def actionCard
@@ -38,8 +40,9 @@ class Player
 
   def actionBet
     myChip = gunyagunya.chip
+    boardRaise = gunyagunya.raise
     
-    if boardBet==0 then
+    if @boardTotal==0 then
       puts "action? (check[1] or bet[3])"
       while 1 do
         myBet.action = STDIN.gets.to_i
@@ -61,30 +64,37 @@ class Player
       end
       
     else
-      puts "action? (fold[0] , call[2] or raise[3])"
+      if boardRaise==0 then
+        puts "action? (fold[0] , call[2] or raise[3])"
+      else
+        puts "action? (fold[0] or call[2])"
+      end
+      
       while 1 do
         myBet.action = STDIN.gets.to_i
-        if myBet.action==0 || myBet.action==2 || myBet.action==3 then
-          if myBet.action==0 then
-            puts "player " + myID + " : fold"
-          elsif myBet.action==2 then
-            if myChip < boardBet then
-              myBet.chip = myChip
-              puts "palyer " + myID + " : call All in " + myBet.chip
-            else
-              puts "player " + myID + " : call"
-            end
-          elsif myBet.action==3 then
-            if myChip < boardBet * 2 then
-              myBet.chip = myChip
-              puts "player " + myID + " : raise All in " + myBet.chip
-            else
-              puts "player " + myID + " : raise make " + myBet.chip
-            end
+        if myBet.action==0 then
+          puts "player " + myID + " : fold"
+        elsif myBet.action==2 then
+          if myChip < boardBet then
+            myBet.chip = myChip
+            puts "palyer " + myID + " : call All in " + myBet.chip
+          else
+            puts "player " + myID + " : call"
           end
-          return myBet.action
-        else
+        elsif myBet.action==3 && boardRaise==0 then
+          if myChip < boardBet * 2 then
+            myBet.chip = myChip
+            puts "player " + myID + " : raise All in " + myBet.chip
+          else
+            puts "player " + myID + " : raise make " + myBet.chip
+          end
+        end
+        return myBet.action
+      else
+        if boardRaise==0 then
           puts "please retype (0,2or3)"
+        else
+          puts "please retype (0or2)"
         end
       end
     end
