@@ -47,15 +47,15 @@ class Player
       while 1 do
         myBet.action = STDIN.gets.to_i
         if myBet.action==1 then
-          puts "player " + myID + " : check"
+          puts "player " + @myID + " : check"
           return myBet.action
         elsif myBet.action==3 then
           if myChip < 20 then
             myBet.chip = myChip
-            puts "player " + myID + " : bet All in " + myBet.chip
+            puts "player " + @myID + " : bet All in " + myBet.chip
             return myBet.action
           else
-            puts "player " + myID + " : bet 20"
+            puts "player " + @myID + " : bet 20"
             return myBet.action
           end
         else
@@ -75,18 +75,18 @@ class Player
         if myBet.action==0 then
           puts "player " + myID + " : fold"
         elsif myBet.action==2 then
-          if myChip < boardBet then
+          if myChip < @boardTotal then
             myBet.chip = myChip
-            puts "palyer " + myID + " : call All in " + myBet.chip
+            puts "palyer " + @myID + " : call All in " + myBet.chip
           else
-            puts "player " + myID + " : call"
+            puts "player " + @myID + " : call"
           end
         elsif myBet.action==3 && boardRaise==0 then
-          if myChip < boardBet * 2 then
+          if myChip < @boardTotal * 2 then
             myBet.chip = myChip
-            puts "player " + myID + " : raise All in " + myBet.chip
+            puts "player " + @myID + " : raise All in " + myBet.chip
           else
-            puts "player " + myID + " : raise make " + myBet.chip
+            puts "player " + @myID + " : raise make " + myBet.chip
           end
         end
         return myBet.action
